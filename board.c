@@ -143,7 +143,7 @@ struct tile *ts_pop(struct tilestack *ts) {
 
 void ts_push(struct tilestack *ts, struct tile *tile) {
     if (ts->count == ts->capacity) {
-        realloc(ts->tiles, ts->capacity *= 2);
+        ts->tiles = realloc(ts->tiles, (ts->capacity *= 2) * sizeof(struct tile *));
     }
 
     ts->tiles[ts->count++] = tile;
@@ -193,7 +193,6 @@ struct tilestack *alloc_deck(char *path) {
     struct tilestack *deck;
     char c, code[6];
     FILE *file;
-    errno_t err;
     uint8_t i;
 
     deck = malloc(sizeof(struct tilestack));
@@ -201,13 +200,9 @@ struct tilestack *alloc_deck(char *path) {
     deck->capacity = DEFAULT_STACK_ALLOCATION;
     deck->tiles = malloc(deck->capacity * sizeof(struct tile *));
 
-    errno = fopen_s(&file, path, "r");
-    if (errno) {
-        printf("Error %d opening file: %s.\n", errno, path);
-    }
-
+    file = fopen(path, "r");
     while (true) {
-        if ((c = getc(file)) == '\0') {
+        if ((c = getc(file)) == EOF) {
             break;
         }
 
@@ -219,6 +214,16 @@ struct tilestack *alloc_deck(char *path) {
     }
 
     return deck;
+}
+
+void run() {
+    printf("all kosher\n");
+}
+
+int main() {
+    struct tilestack *ts = alloc_deck("tilesets/base.carc");
+    run();
+    printf("teehee\n");
 }
 
 // TODO alphabetize things
