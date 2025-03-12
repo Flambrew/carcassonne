@@ -1,0 +1,20 @@
+6 characters:
+edge, edge, edge, edge, feature, alt feature
+
+EDGE_GRASS:g
+EDGE_ROAD:r
+EDGE_CITY:c
+EDGE_RIVER:s
+
+FEAT_NONE:x
+FEAT_VILLAGE:v
+FEAT_CITY:c
+FEAT_SHIELD:s
+FEAT_MONASTERY:m
+
+ALT_NONE:x
+ALT_GARDEN:g
+ALT_FARMHOUSE:f
+ALT_TOWER:t
+ALT_HIGHWAYMAN:h
+ALT_STABLE:s
