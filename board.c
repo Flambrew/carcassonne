@@ -25,29 +25,29 @@ void set_gameseed(struct player **players, uint8_t count) {
 
 enum edge {
     NULL_EDGE,
-    EDGE_GRASS,
-    EDGE_ROAD,
     EDGE_CITY,
-    EDGE_RIVER
+    EDGE_GRASS,
+    EDGE_RIVER,
+    EDGE_ROAD,
 };
 
 enum feature {
-    NULL_FEATURE,
-    FEAT_VILLAGE,    
+    NULL_FEATURE, 
     FEAT_CITY,
+    FEAT_MONASTERY,
     FEAT_SHIELD,
-    FEAT_MONASTERY
+    FEAT_VILLAGE
 };
 
 enum alt_feature {
     NULL_ALT,
-    ALT_GARDEN,
     ALT_FARMHOUSE,
-    ALT_TOWER,
+    ALT_GARDEN,
     ALT_HIGHWAYMAN,
-    ALT_STABLE,
+    ALT_LAKE,
     ALT_SOURCE,
-    ALT_LAKE
+    ALT_STABLE,
+    ALT_TOWER
 };
 
 struct tile {
@@ -69,41 +69,45 @@ struct tile *alloc_tile(char *code) {
 
     edges = malloc(4 * sizeof(enum edge));
     for (i = 0; i < 4; ++i) {
-        if (code[i] == 'g') {
-            edges[i] = EDGE_GRASS;
-        } else if (code[i] == 'r') {
-            edges[i] = EDGE_ROAD;
-        } else if (code[i] == 'c') {
+        if (code[i] == 'c') {
             edges[i] = EDGE_CITY;
+        } else if (code[i] == 'g') {
+            edges[i] = EDGE_GRASS;
         } else if (code[i] == 's') {
             edges[i] = EDGE_RIVER;
+        } else if (code[i] == 'r') {
+            edges[i] = EDGE_ROAD;
         }
     }
 
-    if (code[4] == 'x') {
-        feature = NULL_FEATURE;
-    } else if (code[4] == 'v') {
-        feature = FEAT_VILLAGE;
-    } else if (code[4] == 'c') {
+    if (code[4] == 'c') {
         feature = FEAT_CITY;
-    } else if (code[4] == 's') {
-        feature = FEAT_SHIELD;
+    } else if (code[4] == 'x') {
+        feature = NULL_FEATURE;
     } else if (code[4] == 'm') {
         feature = FEAT_MONASTERY;
+    } else if (code[4] == 's') {
+        feature = FEAT_SHIELD;
+    } else if (code[4] == 'v') {
+        feature = FEAT_VILLAGE;
     }
 
     if (code[5] == 'x') {
         alt = NULL_ALT;
-    } else if (code[5] == 'g') {
-        alt = ALT_GARDEN;
     } else if (code[5] == 'f') {
         alt = ALT_FARMHOUSE;
-    } else if (code[5] == 't') {
-        alt = ALT_TOWER;
+    } else if (code[5] == 'g') {
+        alt = ALT_GARDEN;
     } else if (code[5] == 'h') {
         alt = ALT_HIGHWAYMAN;
+    } else if (code[5] == 'l') {
+        alt = ALT_LAKE;
+    } else if (code[5] == 'r') {
+        alt = ALT_SOURCE;
     } else if (code[5] == 's') {
         alt = ALT_STABLE;
+    } else if (code[5] == 't') {
+        alt = ALT_TOWER;
     }
 
     tile = malloc(sizeof(struct tile));
@@ -226,5 +230,4 @@ int main() {
     printf("teehee\n");
 }
 
-// TODO alphabetize things
 // TODO print errors
